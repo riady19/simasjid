@@ -13,6 +13,11 @@ class ListFinancialReports extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
+            Actions\Action::make('pdf')
+                ->label('Cetak PDF')
+                ->icon('heroicon-o-printer')
+                ->url(route('financial-report.pdf'))
+                ->openUrlInNewTab(),
             Actions\CreateAction::make(),
         ];
     }

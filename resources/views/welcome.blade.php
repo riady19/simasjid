@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+    <meta http-equiv="refresh" content="90">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masjid Baitul Amal - Sistem Informasi</title>
@@ -49,7 +50,7 @@
             bottom: 0;
             width: 40vw;
             background-image: url('{{ asset('images/mosque_ornament.png') }}');
-            background-size: contain;
+            background-size: auto 100%;
             background-repeat: no-repeat;
             opacity: 0.20;
             z-index: -1;
@@ -782,6 +783,10 @@
                 <div class="card-header">
                     <svg viewBox="0 0 24 24"><path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M15,13V17H13V13H9V11H13V7H15V11H19V13H15Z" /></svg>
                     <h2>Laporan Kas Masjid</h2>
+                    <a href="{{ route('financial-report.pdf') }}" target="_blank" style="margin-left: auto; background: var(--primary); color: #000; padding: 0.5vh 1.5vh; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 1.8vh; display: flex; align-items: center; gap: 0.5vh;">
+                        <svg style="width: 2vh; height: 2vh; fill: #000;" viewBox="0 0 24 24"><path d="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z" /></svg>
+                        Cetak PDF
+                    </a>
                 </div>
                 <div class="financial-grid">
                     <div class="financial-item">
@@ -895,6 +900,10 @@
                 <div class="card-header">
                     <svg viewBox="0 0 24 24"><path d="M12,2C6.48,2 2,6.48 2,12C2,17.52 6.48,22 12,22C17.52,22 22,17.52 22,12C22,6.48 17.52,2 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M11,7H13V13H11V7M11,15H13V17H11V15Z" /></svg>
                     <h2>Informasi Zakat</h2>
+                    <a href="{{ route('zakat-report.pdf') }}" target="_blank" style="margin-left: auto; background: var(--primary); color: #000; padding: 0.5vh 1.5vh; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 1.8vh; display: flex; align-items: center; gap: 0.5vh;">
+                        <svg style="width: 2vh; height: 2vh; fill: #000;" viewBox="0 0 24 24"><path d="M18,3H6V7H18M19,12A1,1 0 0,1 18,11A1,1 0 0,1 19,10A1,1 0 0,1 20,11A1,1 0 0,1 19,12M16,19H8V14H16M19,8H5A3,3 0 0,0 2,11V17H6V21H18V17H22V11A3,3 0 0,0 19,8Z" /></svg>
+                        Cetak PDF
+                    </a>
                 </div>
                 <div class="zakat-grid">
                     <div class="zakat-card-inner">

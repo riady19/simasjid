@@ -79,3 +79,54 @@ Route::get('/', function () {
         'fridayInfaq'
     ));
 });
+
+Route::get('/financial-report/pdf', function () {
+    // Operational (Exclude 'yatim')
+    $operationalIncomes = FinancialReport::where('type', 'income')
+        ->where(function ($query) {
+            $query->where('category', '!=', 'yatim')
+                  ->orWhereNull('category');
+        })
+        ->orderBy('date')
+        ->get();
+
+    $operationalExpenses = FinancialReport::where('type', 'expense')
+        ->where(function ($query) {
+            $query->where('category', '!=', 'yatim')
+                  ->orWhereNull('category');
+        })
+        ->orderBy('date')
+        ->get();
+
+    // Orphan (Only 'yatim')
+    $orphanIncomes = FinancialReport::where('type', 'income')
+        ->where('category', 'yatim')
+        ->orderBy('date')
+        ->get();
+
+    $orphanExpenses = FinancialReport::where('type', 'expense')
+        ->where('category', 'yatim')
+        ->orderBy('date')
+        ->get();
+
+    $fridayInfaqs = \App\Models\FridayInfaq::orderBy('date')->get();
+    
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.financial-report', compact(
+        'operationalIncomes', 
+        'operationalExpenses', 
+        'orphanIncomes', 
+        'orphanExpenses', 
+        'fridayInfaqs'
+    ));
+    
+    return $pdf->stream('laporan-keuangan.pdf');
+})->name('financial-report.pdf');
+
+Route::get('/zakat-report/pdf', function () {
+    $zakatFitrah = \App\Models\Zakat::where('type', 'fitrah')->orderBy('date')->get();
+    $zakatMaal = \App\Models\Zakat::where('type', 'maal')->orderBy('date')->get();
+    
+    $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.zakat-report', compact('zakatFitrah', 'zakatMaal'));
+    
+    return $pdf->stream('laporan-zakat.pdf');
+})->name('zakat-report.pdf');
