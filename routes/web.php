@@ -81,8 +81,12 @@ Route::get('/', function () {
 });
 
 Route::get('/financial-report/pdf', function () {
-    // Operational (Exclude 'yatim')
+    $today = Carbon::today();
+    
+    // Operational (Exclude 'yatim') - Filtered by current month
     $operationalIncomes = FinancialReport::where('type', 'income')
+        ->whereMonth('date', $today->month)
+        ->whereYear('date', $today->year)
         ->where(function ($query) {
             $query->where('category', '!=', 'yatim')
                   ->orWhereNull('category');
@@ -91,6 +95,8 @@ Route::get('/financial-report/pdf', function () {
         ->get();
 
     $operationalExpenses = FinancialReport::where('type', 'expense')
+        ->whereMonth('date', $today->month)
+        ->whereYear('date', $today->year)
         ->where(function ($query) {
             $query->where('category', '!=', 'yatim')
                   ->orWhereNull('category');
@@ -98,18 +104,26 @@ Route::get('/financial-report/pdf', function () {
         ->orderBy('date')
         ->get();
 
-    // Orphan (Only 'yatim')
+    // Orphan (Only 'yatim') - Filtered by current month
     $orphanIncomes = FinancialReport::where('type', 'income')
         ->where('category', 'yatim')
+        ->whereMonth('date', $today->month)
+        ->whereYear('date', $today->year)
         ->orderBy('date')
         ->get();
 
     $orphanExpenses = FinancialReport::where('type', 'expense')
         ->where('category', 'yatim')
+        ->whereMonth('date', $today->month)
+        ->whereYear('date', $today->year)
         ->orderBy('date')
         ->get();
 
-    $fridayInfaqs = \App\Models\FridayInfaq::orderBy('date')->get();
+    // Friday Infaq - Filtered by current month
+    $fridayInfaqs = \App\Models\FridayInfaq::whereMonth('date', $today->month)
+        ->whereYear('date', $today->year)
+        ->orderBy('date')
+        ->get();
     
     $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.financial-report', compact(
         'operationalIncomes', 
@@ -130,3 +144,10 @@ Route::get('/zakat-report/pdf', function () {
     
     return $pdf->stream('laporan-zakat.pdf');
 })->name('zakat-report.pdf');
+
+Route::get('/dokumentasi', function () {
+    $runningTexts = \App\Models\RunningText::where('is_active', true)->get();
+    $galleries = \App\Models\Gallery::where('is_active', true)->get();
+    $videos = \App\Models\Video::where('is_active', true)->get();
+    return view('dokumentasi', compact('runningTexts', 'galleries', 'videos'));
+})->name('dokumentasi');

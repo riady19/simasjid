@@ -1254,7 +1254,7 @@
             }
 
             .slider-container {
-                height: 50vh;
+                height: 38vh; /* Reduced from 50vh to make room for prayer times */
             }
 
             .financial-grid {
@@ -1285,19 +1285,33 @@
 
         @media (max-width: 480px) {
             nav h1, #clock {
-                font-size: 3vh;
+                font-size: 2.8vh;
+            }
+            
+            .nav-left img {
+                height: 5vh !important;
+                width: 5vh !important;
             }
 
             .slider-container {
-                height: 45vh;
+                height: 35vh;
             }
 
-            .prayer-time {
-                font-size: 2.2vh;
+            .prayer-grid.compact .prayer-item {
+                padding: 0.6vh 1.5vh;
             }
 
-            .prayer-name {
-                font-size: 1.8vh;
+            .prayer-grid.compact .prayer-name {
+                font-size: 2vh;
+            }
+
+            .prayer-grid.compact .prayer-time {
+                font-size: 2.8vh;
+            }
+
+            .prayer-icon {
+                width: 2.8vh;
+                height: 2.8vh;
             }
         }
     </style>
